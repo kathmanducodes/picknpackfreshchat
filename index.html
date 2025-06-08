@@ -1,40 +1,101 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Pick N Pack Chat Support</title>
+    <title>Pick N Pack – Chat Support</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+    // Enable fullscreen mode
+    window.fcWidgetMessengerConfig = {
+      config: {
+        fullscreen: true,
+        headerProperty: { hideChatButton: true }
+      }
+    };
+  </script>
   </head>
   <body>
-    <p>Loading Chat.....</p>
+     <p>Pick N Pack – Chat Support</p>
+    <p>Loading chat&hellip; please wait.</p>
 
-    <script>
-      // Wait for the widget to load before initializing
-      window.fcWidgetInit = function () {
-        window.fcWidget.init({
-          token: "458dfe35-a8fa-4bf7-9592-92f7d16b5285", // Replace with your actual App ID (widget token)
-          host: "https://wchat.freshchat.com",
-          externalId: "user@example.com", // Optional
-          restoreId: null // Optional
-        });
-
-        window.fcWidget.user.setProperties({
-          firstName: "John",
-          lastName: "Doe",
-          email: "user@example.com",
-          phone: "+1234567890",
-        });
-      };
-
-      // Dynamically load the Freshchat script
-      (function () {
+    <!-- <script>
+      document.addEventListener("DOMContentLoaded", function () {
         var fcScript = document.createElement("script");
         fcScript.type = "text/javascript";
         fcScript.async = true;
         fcScript.src = "https://wchat.freshchat.com/js/widget.js";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(fcScript, s);
-      })();
-    </script>
+
+        fcScript.onload = function () {
+          window.fcWidget.init({
+            token: "dd86579c-0267-4f63-bbdc-b567f5c92a9a",
+            host: "https://wchat.freshchat.com",
+            domain: "msdk.freshchat.com",
+            externalId: "user@example.com",
+            restoreId: null,
+          });
+
+          window.fcWidget.user.setProperties({
+            firstName: "John",
+            lastName: "Doe",
+            email: "user@example.com",
+            phone: "+1234567890",
+          });
+        };
+
+        document.head.appendChild(fcScript);
+      });
+    </script> -->
+
+<script src='//fw-cdn.com/13312838/5428194.js' chat='true'></script>
+
+<!-- <script>
+    // Wait for fcWidget to be defined and initialized, then open it
+    function waitForWidgetAndOpen(attempts = 0) {
+      if (window.fcWidget && typeof window.fcWidget.open === 'function') {
+        window.fcWidget.open();
+      } else if (attempts < 20) {
+        setTimeout(() => waitForWidgetAndOpen(attempts + 1), 300); // Try again in 300ms
+      } else {
+        console.warn("fcWidget not available after multiple attempts.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      waitForWidgetAndOpen();
+    });
+  </script> -->
+  <script>
+      function waitForElementAndHide(attempts = 0) {
+        const el = document.querySelector('.d_hotline.minimize.fc-mobile-close');
+        if (el) {
+          el.style.display = 'none';
+        } else if (attempts < 30) {
+          setTimeout(() => waitForElementAndHide(attempts + 1), 300);
+        } else {
+          console.warn('Close button with aria-label="Close widget" not found after multiple attempts.');
+        }
+      }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+      waitForElementAndHide();
+    });
+
+  function waitForWidgetAndOpen(attempts = 0) {
+    if (window.fcWidget && typeof window.fcWidget.open === 'function') {
+      window.fcWidget.open();
+    } else if (attempts < 20) {
+      setTimeout(() => waitForWidgetAndOpen(attempts + 1), 300);
+    } else {
+      console.warn("fcWidget not available after multiple attempts.");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    waitForWidgetAndOpen();
+  });
+</script>
+
+
   </body>
 </html>
