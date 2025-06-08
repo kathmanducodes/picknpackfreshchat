@@ -1,24 +1,40 @@
- <!DOCTYPE html>
- <html>
+<!DOCTYPE html>
+<html>
   <head>
-    <title>PicknPack</title>
-    <script src="https://wchat.freshchat.com/js/widget.js"></script>
-    <script>
-      window.fcWidget.init({
-        token: "39b9d590-67f3-40d1-9829-47e118e44f67",
-        host: "https://wchat.freshchat.com",
-        externalId: "user@example.com", // Optional
-        restoreId: null // Optional
-      });
-      window.fcWidget.user.setProperties({
-        firstName: "John",
-        lastName: "Doe",
-        email: "user@example.com",
-        phone: "+1234567890",
-      });
-    </script>
+    <title>Freshchat Widget</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
-    <p>Loading Chat...</p>
+    <p>Loading Freshchat...</p>
+
+    <script>
+      // Wait for the widget to load before initializing
+      window.fcWidgetInit = function () {
+        window.fcWidget.init({
+          token: "458dfe35-a8fa-4bf7-9592-92f7d16b5285", // Replace with your actual App ID (widget token)
+          host: "https://wchat.freshchat.com",
+          externalId: "user@example.com", // Optional
+          restoreId: null // Optional
+        });
+
+        window.fcWidget.user.setProperties({
+          firstName: "John",
+          lastName: "Doe",
+          email: "user@example.com",
+          phone: "+1234567890",
+        });
+      };
+
+      // Dynamically load the Freshchat script
+      (function () {
+        var fcScript = document.createElement("script");
+        fcScript.type = "text/javascript";
+        fcScript.async = true;
+        fcScript.src = "https://wchat.freshchat.com/js/widget.js";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(fcScript, s);
+      })();
+    </script>
   </body>
- </html>
+</html>
