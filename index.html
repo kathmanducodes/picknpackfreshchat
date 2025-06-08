@@ -13,57 +13,51 @@
       }
     };
   </script>
+  <style>
+  body {
+    margin: 0;
+    background: #f7f9fc;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #c-body {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+  }
+
+  #c-body p {
+    margin: 0 0 16px;
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+
+  #c-body p:last-child {
+    color: #555;
+    font-style: italic;
+  }
+</style>
+
   </head>
   <body>
-     <p>Pick N Pack – Chat Support</p>
+    <div id="c-body">
+    <p>Pick N Pack – Chat Support</p>
     <p>Loading chat&hellip; please wait.</p>
+    </div>
+    
 
-    <!-- <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var fcScript = document.createElement("script");
-        fcScript.type = "text/javascript";
-        fcScript.async = true;
-        fcScript.src = "https://wchat.freshchat.com/js/widget.js";
-
-        fcScript.onload = function () {
-          window.fcWidget.init({
-            token: "dd86579c-0267-4f63-bbdc-b567f5c92a9a",
-            host: "https://wchat.freshchat.com",
-            domain: "msdk.freshchat.com",
-            externalId: "user@example.com",
-            restoreId: null,
-          });
-
-          window.fcWidget.user.setProperties({
-            firstName: "John",
-            lastName: "Doe",
-            email: "user@example.com",
-            phone: "+1234567890",
-          });
-        };
-
-        document.head.appendChild(fcScript);
-      });
-    </script> -->
 
 <script src='//fw-cdn.com/13312838/5428194.js' chat='true'></script>
 
-<!-- <script>
-    // Wait for fcWidget to be defined and initialized, then open it
-    function waitForWidgetAndOpen(attempts = 0) {
-      if (window.fcWidget && typeof window.fcWidget.open === 'function') {
-        window.fcWidget.open();
-      } else if (attempts < 20) {
-        setTimeout(() => waitForWidgetAndOpen(attempts + 1), 300); // Try again in 300ms
-      } else {
-        console.warn("fcWidget not available after multiple attempts.");
-      }
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      waitForWidgetAndOpen();
-    });
-  </script> -->
   <script>
       function waitForElementAndHide(attempts = 0) {
         const el = document.querySelector('.d_hotline.minimize.fc-mobile-close');
@@ -84,6 +78,21 @@
   function waitForWidgetAndOpen(attempts = 0) {
     if (window.fcWidget && typeof window.fcWidget.open === 'function') {
       window.fcWidget.open();
+      // After opening, wait a moment and then hide the close button
+        setTimeout(() => {
+          waitForElementAndHide();
+
+          // Then update only the #c-body content with reload message
+          setTimeout(() => {
+            const cBody = document.getElementById('c-body');
+            if (cBody) {
+              cBody.innerHTML = `
+                <p>Oops! It looks like you closed the chat.</p>
+                <p>No worries — just reload the page to start chatting again.</p>
+              `;
+            }
+          }, 1000); // 1 second delay before replacing content
+        }, 7000); // 7 second delay to let chat open fully
     } else if (attempts < 20) {
       setTimeout(() => waitForWidgetAndOpen(attempts + 1), 300);
     } else {
