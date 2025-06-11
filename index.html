@@ -30,20 +30,19 @@
     #c-body {
       position: absolute;
       background: white;
-    padding: 75px 25px 25px 25px;
-    border-radius: 16px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
-    text-align: center;
-    max-width: 340px;
-    width: 90% !important;
-  
-    z-index: 2;
-    height: 20vh;
-    display: flex;
-    align-items: stretch;
-    justify-content: center;
-    flex-direction: column;
-    gap: 70px;
+      padding: 75px 25px 25px 25px;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      max-width: 340px;
+      width: 90% !important;
+      z-index: 2;
+      height: 20vh;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      flex-direction: column;
+      gap: 70px;
     }
 
     #c-body p {
@@ -184,6 +183,90 @@ margin-top: -50px;
       60% { content: ".."; }
       80%, 100% { content: "..."; }
     }
+
+    /* Responsive styles */
+    @media screen and (max-width: 480px) {
+      #c-body {
+        padding: 60px 20px 20px 20px;
+        max-width: 300px;
+        gap: 50px;
+      }
+
+      #c-body p:first-child {
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+
+      #c-body p:last-child {
+        font-size: 1rem;
+      }
+
+      .circle-1 { width: 80px; height: 80px; }
+      .circle-2 { width: 65px; height: 65px; }
+      .circle-3 { width: 50px; height: 50px; }
+      .circle-4 { width: 35px; height: 35px; }
+    }
+
+    @media screen and (max-width: 360px) {
+      #c-body {
+        padding: 50px 15px 15px 15px;
+        max-width: 280px;
+        gap: 40px;
+      }
+
+      #c-body p:first-child {
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+      }
+
+      #c-body p:last-child {
+        font-size: 0.95rem;
+      }
+
+      .circle-1 { width: 70px; height: 70px; }
+      .circle-2 { width: 55px; height: 55px; }
+      .circle-3 { width: 40px; height: 40px; }
+      .circle-4 { width: 25px; height: 25px; }
+    }
+
+    @media screen and (min-width: 481px) and (max-width: 768px) {
+      #c-body {
+        padding: 65px 22px 22px 22px;
+        max-width: 320px;
+        gap: 60px;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      #c-body {
+        padding: 75px 25px 25px 25px;
+        max-width: 340px;
+        gap: 70px;
+      }
+    }
+
+    /* Ensure the loader stays centered on all devices */
+    #loader {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Adjust error overlay for different screens */
+    .error-overlay {
+      margin-top: -50px;
+      padding: 0 15px;
+    }
+
+    @media screen and (max-width: 480px) {
+      .error-overlay {
+        margin-top: -40px;
+        padding: 0 10px;
+      }
+    }
   </style>
 
 </head>
@@ -234,9 +317,9 @@ margin-top: -50px;
       });
 
       // After opening, wait a moment and then hide the close button
-      setTimeout(() => {
-        waitForElementAndHide();
-      }, 7000); // 7 second delay to let chat open fully
+      // setTimeout(() => {
+      //   waitForElementAndHide();
+      // }, 7000); // 7 second delay to let chat open fully
     } else if (attempts < 20) {
       setTimeout(() => waitForWidgetAndOpen(attempts + 1), 300);
     } else {
