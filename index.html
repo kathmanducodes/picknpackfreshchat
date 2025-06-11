@@ -170,6 +170,20 @@
 .error-overlay{
 margin-top: -50px;
 }
+.dot-loader::after {
+      content: "";
+      display: inline-block;
+      width: 1.5em;
+      text-align: left;
+      animation: dots 2s ease-in-out infinite;
+    }
+    
+    @keyframes dots {
+      0%, 20% { content: ""; }
+      40% { content: "."; }
+      60% { content: ".."; }
+      80%, 100% { content: "..."; }
+    }
   </style>
 
 </head>
@@ -185,10 +199,11 @@ margin-top: -50px;
       </div>
     </div>
     <div class="loader-text">
-      <p>Welcome to Pick N Pack Support</p>
-      <p>We're preparing your chat experience&hellip;</p>
+      <p>PickNPack Chat Support</p>
+      <p>Getting you connected <span class="dot-loader"></span></p>
     </div>
   </div>
+
 
 <script src='//fw-cdn.com/13312838/5428194.js' chat='true'></script>
 
@@ -212,40 +227,16 @@ margin-top: -50px;
   function waitForWidgetAndOpen(attempts = 0) {
     if (window.fcWidget && typeof window.fcWidget.open === 'function') {
       window.fcWidget.open();
-      // After opening, wait a moment and then hide the close button
-        setTimeout(() => {
-          waitForElementAndHide();
+      
+      // Add event listener for widget close
+      window.fcWidget.on('widget:closed', function() {
+        changeToRestore();
+      });
 
-          // Then update only the #c-body content with reload message
-          setTimeout(() => {
-            const cBody = document.getElementById('c-body');
-            if (cBody) {
-              cBody.innerHTML = `
-              <div class="error-overlay">
-              <p>Oops! It looks like you closed the chat.</p>
-              <p style="font-size: 12px;"> Restoring Chat in <span id="timer">6</span> seconds</p>
-              <button class="reload-btn" onclick="handleReload(this)">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-               Restore Chat
-              </button> 
-              </div>
-              `;
-              //start timer
-              const timer = document.getElementById('timer');
-              let time = 6;
-              const interval = setInterval(() => {
-                time--;
-                timer.textContent = time;
-                if (time <= 0) {
-                  clearInterval(interval);
-                  window.location.reload();
-                }
-              }, 1000);
-            }
-          }, 1000); // 1 second delay before replacing content
-        }, 7000); // 7 second delay to let chat open fully
+      // After opening, wait a moment and then hide the close button
+      setTimeout(() => {
+        waitForElementAndHide();
+      }, 7000); // 7 second delay to let chat open fully
     } else if (attempts < 20) {
       setTimeout(() => waitForWidgetAndOpen(attempts + 1), 300);
     } else {
@@ -264,6 +255,35 @@ margin-top: -50px;
   document.addEventListener("DOMContentLoaded", function () {
     waitForWidgetAndOpen();
   });
+  
+  function changeToRestore(){
+    const cBody = document.getElementById('c-body');
+            if (cBody) {
+              cBody.innerHTML = `
+              <div class="error-overlay">
+              <p>Oops! It looks like you closed the chat.</p>
+              <p style="font-size: 12px;"> Restoring Chat in <span id="timer">5</span> seconds</p>
+              <button class="reload-btn" onclick="handleReload(this)">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+               Restore Chat
+              </button> 
+              </div>
+              `;
+              //start timer
+              const timer = document.getElementById('timer');
+              let time = 5;
+              const interval = setInterval(() => {
+                time--;
+                timer.textContent = time;
+                if (time <= 0) {
+                  clearInterval(interval);
+                  window.location.reload();
+                }
+              }, 1000);
+            }
+  }
 </script>
 
 
