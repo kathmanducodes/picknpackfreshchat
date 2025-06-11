@@ -168,7 +168,7 @@
   color: black;
 }
 .error-overlay{
-  padding:45px 0px;
+margin-top: -50px;
 }
   </style>
 
@@ -223,14 +223,26 @@
               cBody.innerHTML = `
               <div class="error-overlay">
               <p>Oops! It looks like you closed the chat.</p>
+              <p style="font-size: 12px;"> Restoring Chat in <span id="timer">6</span> seconds</p>
               <button class="reload-btn" onclick="handleReload(this)">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
-                Reload Page
+               Restore Chat
               </button> 
               </div>
               `;
+              //start timer
+              const timer = document.getElementById('timer');
+              let time = 6;
+              const interval = setInterval(() => {
+                time--;
+                timer.textContent = time;
+                if (time <= 0) {
+                  clearInterval(interval);
+                  window.location.reload();
+                }
+              }, 1000);
             }
           }, 1000); // 1 second delay before replacing content
         }, 7000); // 7 second delay to let chat open fully
